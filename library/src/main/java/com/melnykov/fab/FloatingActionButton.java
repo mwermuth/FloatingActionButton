@@ -305,15 +305,19 @@ public class FloatingActionButton extends ImageButton {
         hide(true);
     }
 
+    public void showWithSnackHeight(int snackHeight) {
+    		toggle(true, true, true, snackHeight);
+		}
+
     public void show(boolean animate) {
-        toggle(true, animate, false);
+        toggle(true, animate, false, 0);
     }
 
     public void hide(boolean animate) {
-        toggle(false, animate, false);
+        toggle(false, animate, false, 0);
     }
 
-    private void toggle(final boolean visible, final boolean animate, boolean force) {
+    private void toggle(final boolean visible, final boolean animate, boolean force, final int snackHeight) {
         if (mVisible != visible || force) {
             mVisible = visible;
             int height = getHeight();
@@ -327,14 +331,14 @@ public class FloatingActionButton extends ImageButton {
                             if (currentVto.isAlive()) {
                                 currentVto.removeOnPreDrawListener(this);
                             }
-                            toggle(visible, animate, true);
+                        		toggle(visible, animate, true, snackHeight);
                             return true;
                         }
                     });
                     return;
                 }
             }
-            int translationY = visible ? 0 : height + getMarginBottom();
+            int translationY = visible ? 0 - snackHeight : height + getMarginBottom();
             if (animate) {
                 ViewPropertyAnimator.animate(this).setInterpolator(mInterpolator)
                         .setDuration(TRANSLATE_DURATION_MILLIS)
