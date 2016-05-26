@@ -1,3 +1,6 @@
+apply plugin: 'maven'
+group = 'com.github.jitpack'
+
 buildscript {
     repositories {
         mavenCentral()
